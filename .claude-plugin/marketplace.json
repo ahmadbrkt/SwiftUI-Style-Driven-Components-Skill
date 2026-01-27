@@ -1,0 +1,59 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "swiftui-style-driven-components-skill",
+  "version": "1.0.0",
+  "owner": {
+    "name": "Ahmad Barakat",
+    "email": "ahmad.ak.barakat@gmail.com"
+  },
+  "metadata": {
+    "description": "Expert guidance on SwiftUI style-driven components: style protocols, configuration patterns, environment-based styling, and reusable component libraries."
+  },
+  "plugins": [
+    {
+      "name": "swiftui-style-driven-components",
+      "description": "Expert guidance on building extensible SwiftUI components using Apple's style-driven architecture patterns. Covers style protocols (ButtonStyle, LabelStyle), configuration objects, environment-based styling, and reusable component library design.",
+      "repository": "https://github.com/ahmadbrkt/SwiftUI-Style-Driven-Components-Skill",
+      "version": "1.0.0",
+      "author": {
+        "name": "Ahmad Barakat",
+        "email": "ahmad.ak.barakat@gmail.com"
+      },
+      "license": "MIT",
+      "category": "development",
+      "keywords": [
+        "swift",
+        "swiftui",
+        "components",
+        "style-protocol",
+        "buttonstyle",
+        "labelstyle",
+        "togglestyle",
+        "design-system",
+        "environment",
+        "configuration",
+        "ios",
+        "macos",
+        "watchos",
+        "tvos",
+        "visionos",
+        "apple"
+      ],
+      "tags": [
+        "swift",
+        "swiftui",
+        "components",
+        "style-protocol",
+        "design-system",
+        "environment",
+        "apple-platforms"
+      ],
+      "source": "./",
+      "skills": [
+        "./swiftui-style-driven-components"
+      ],
+      "strict": false
+    }
+  ]
+}
+
