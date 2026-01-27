@@ -14,7 +14,7 @@ Distilled from Apple's official patterns (`ButtonStyle`, `LabelStyle`, `ToggleSt
 ### Option A: Using skills.sh (recommended)
 Install this skill with a single command:
 ```bash
-npx skills add https://github.com/ahmadbrkt/swiftUI-style-driven-components-skill --skill swiftui-style-driven-components
+npx skills add https://github.com/ahmadbrkt/swiftui-style-driven-components-skill --skill swiftui-style-driven-components
 ```
 
 For more information, visit the [skills.sh platform page](https://skills.sh/ahmadbrkt/SwiftUI-Style-Driven-Components-Skill/swiftui-style-driven-components).
@@ -35,7 +35,7 @@ To install this Skill for your personal use in Claude Code:
 
 2. Install the Skill:
    ```bash
-   /plugin install swiftui-style-driven-components@swiftUI-style-driven-components-skill
+   /plugin install swiftui-style-driven-components@swiftui-style-driven-components-skill
    ```
 
 #### Project Configuration
@@ -45,10 +45,10 @@ To automatically provide this Skill to everyone working in a repository, configu
 ```json
 {
   "enabledPlugins": {
-    "swiftui-style-driven-components@swiftUI-style-driven-components-skill": true
+    "swiftui-style-driven-components@swiftui-style-driven-components-skill": true
   },
   "extraKnownMarketplaces": {
-    "swiftUI-style-driven-components-skill": {
+    "swiftui-style-driven-components-skill": {
       "source": {
         "source": "github",
         "repo": "ahmadbrkt/SwiftUI-Style-Driven-Components-Skill"
