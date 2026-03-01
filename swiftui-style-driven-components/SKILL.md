@@ -73,6 +73,7 @@ This skill provides expert guidance on building, reviewing, and extending SwiftU
 - **Setting up environment keys** → `references/environment-keys.md`
 - **Adding convenience initializers** → `references/common-patterns.md`
 - **Parameterized or adaptive styles** → `references/common-patterns.md`
+- **Documenting public APIs** → `references/documentation.md`
 - **Using design tokens** → `references/design-system.md`
 - **Writing tests** → `references/testing.md`
 - **Organizing previews** → `references/previews.md`
@@ -138,6 +139,8 @@ This skill provides expert guidance on building, reviewing, and extending SwiftU
 - [ ] Default value provided (`.automatic`)
 
 ### Quality
+- [ ] All public symbols have `///` doc comments
+- [ ] Component doc comment includes usage example
 - [ ] Previews cover all styles (see `references/previews.md`)
 - [ ] Snapshot tests exist (see `references/testing.md`)
 - [ ] Accessibility supported (see `references/accessibility.md`)
@@ -146,6 +149,7 @@ This skill provides expert guidance on building, reviewing, and extending SwiftU
 ## Reference Files
 
 - **`references/component-structure.md`** — File organization, MARK conventions
+- **`references/documentation.md`** — Doc comments following Apple conventions
 - **`references/style-protocol.md`** — Protocol, configuration, anti-patterns
 - **`references/environment-keys.md`** — Environment injection, usage patterns
 - **`references/common-patterns.md`** — Convenience inits, parameterized styles, bindings, roles
