@@ -11,7 +11,7 @@ Sources/[Library]/Components/[Component]/
 ├── Styles/
 │   ├── [Component]Style.swift
 │   ├── [Component]StyleConfiguration.swift
-│   └── [Default][Component]Style.swift
+│   └── Default[Component]Style.swift
 └── [Component].swift
 
 Sources/[Library]/Support/Previews/
@@ -21,7 +21,9 @@ Tests/[Library]Tests/Components/
 └── [Component]Tests.swift
 ```
 
-## Optional Content Folder
+## Optional Folders
+
+### Content Folder
 
 Add `Content/[Component]Content.swift` **only** when:
 - Multiple styles share identical layout
@@ -35,23 +37,97 @@ Skip when:
 
 ## Naming Conventions
 
-- **Component**: `[Component]` (choose a consistent naming convention for your library)
+- **Component**: `[Component]`
 - **Style Protocol**: `[Component]Style`
-- **Style Implementation**: `Default[Component]Style`, `Custom[Component]Style`
+- **Style Implementation**: `Default[Component]Style`, `Compact[Component]Style`
 - **Configuration**: `[Component]StyleConfiguration`
 - **Environment Key File**: `[Component]StyleKey.swift`
 - **Preview File**: `[Component]Previews.swift`
 - **Test File**: `[Component]Tests.swift`
+
+## MARK Comment Convention
+
+Use consistent MARK sections across all component files:
+
+```swift
+public struct Card<Content>: View where Content: View {
+    
+    // MARK: - Properties
+    
+    private let action: () -> Void
+    private let content: Content
+    
+    // MARK: - Environment
+    
+    @Environment(\.cardStyle) private var style
+    
+    // MARK: - State (if needed)
+    
+    @State private var isPressed = false
+    
+    // MARK: - Initializer
+    
+    public init(
+        action: @escaping @MainActor () -> Void,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.action = action
+        self.content = content()
+    }
+
+    // MARK: - Body
+
+    public var body: some View {
+        AnyView(
+            style.makeBody(
+                configuration: .init(content: content)
+            )
+        )
+    }
+}
+
+// MARK: - Convenience Extensions
+
+extension Card where Content == Text {
+    // ...
+}
+```
+
+For configuration files:
+
+```swift
+public struct CardStyleConfiguration {
+
+    // MARK: - Type-Erased Views
+    
+    public struct Content: View { ... }
+    
+    // MARK: - Properties
+    
+    public let content: Content
+    
+    // MARK: - Initializer
+    
+    @MainActor
+    init<Content: View>(content: Content) { ... }
+}
+```
 
 ## Component Implementation
 
 ```swift
 public struct Card<Content>: View where Content: View {
     
+    // MARK: - Properties
+
     private let action: () -> Void
     private let content: Content
     
+    // MARK: - Environment
+
     @Environment(\.cardStyle) private var style
+
+    // MARK: - Initializer
 
     public init(
         action: @escaping @MainActor () -> Void,
@@ -60,6 +136,8 @@ public struct Card<Content>: View where Content: View {
         self.action = action
         self.content = content()
     }
+
+    // MARK: - Body
 
     public var body: some View {
         AnyView(
@@ -77,5 +155,5 @@ public struct Card<Content>: View where Content: View {
 2. **Internal Configuration**: Configuration created in body, not passed to initializer
 3. **Generic Content**: Use generics for flexible content types
 4. **ViewBuilder**: Use `@ViewBuilder` for content closures
-5. **Environment**: Read style from environment using `any CardStyle`
+5. **Environment**: Read style from environment using `any [Component]Style`
 6. **AnyView Wrapper**: Wrap `style.makeBody` in `AnyView` for type erasure

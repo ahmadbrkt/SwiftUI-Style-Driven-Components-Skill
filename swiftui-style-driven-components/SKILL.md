@@ -1,6 +1,6 @@
 ---
 name: swiftui-style-driven-components
-description: 'Expert guidance on SwiftUI style-driven components following Apple patterns (ButtonStyle, LabelStyle). Use when: building components with style protocols, implementing configuration patterns, adding environment-based styling, creating extensible component libraries, or reviewing component architecture.'
+description: 'Expert guidance on SwiftUI style-driven components following Apple patterns (ButtonStyle, LabelStyle). Use when: building components with style protocols, implementing configuration patterns, adding environment-based styling, creating extensible component libraries, reviewing component architecture, or writing snapshot and unit tests for components.'
 ---
 
 # SwiftUI Style-Driven Components
@@ -74,9 +74,10 @@ This skill provides expert guidance on building, reviewing, and extending SwiftU
 - **Adding convenience initializers** → `references/common-patterns.md`
 - **Parameterized or adaptive styles** → `references/common-patterns.md`
 - **Using design tokens** → `references/design-system.md`
-- **Writing snapshot tests** → `references/testing.md`
+- **Writing tests** → `references/testing.md`
 - **Organizing previews** → `references/previews.md`
 - **Accessibility requirements** → `references/accessibility.md`
+- **Advanced: state machines, dual protocols, result builders** → `references/advanced-patterns.md`
 
 ## Quick Reference
 
@@ -95,7 +96,7 @@ This skill provides expert guidance on building, reviewing, and extending SwiftU
 
 - **Style Protocol**: `DynamicProperty`, `@ViewBuilder @MainActor func makeBody`
 - **Configuration**: Nested `struct Content: View` with `private let _body: () -> AnyView`
-- **Configuration Init**: `internal` (not `public`)
+- **Configuration Init**: `internal` (not `public`), `@MainActor`
 - **Component Body**: `AnyView(style.makeBody(configuration: .init(...)))`
 - **Environment Key**: `@Entry public var style: any [Component]Style = .automatic`
 - **View Modifier**: `func style(_ style: some [Component]Style) -> some View`
@@ -111,12 +112,14 @@ This skill provides expert guidance on building, reviewing, and extending SwiftU
 - Provide convenience accessors (`.compact`, `.outlined`)
 
 ### DON'T
-- Add explicit `Sendable` to protocols
+- Add explicit `Sendable` to style protocols
 - Make configuration initializers `public`
 - Pass configuration to component initializer
 - Put content properties in style protocol
 - Use style protocol for single-variant components
 - Use `AnyView` directly as configuration property type
+- Use `foregroundColor()` (deprecated — use `foregroundStyle()`)
+- Use `.cornerRadius()` (deprecated — use `clipShape()`)
 
 ## Review Checklist
 
@@ -142,12 +145,13 @@ This skill provides expert guidance on building, reviewing, and extending SwiftU
 
 ## Reference Files
 
-- **`references/component-structure.md`** — Creating new component, file organization
-- **`references/style-protocol.md`** — Protocol definition, configuration pattern, adding styles
+- **`references/component-structure.md`** — File organization, MARK conventions
+- **`references/style-protocol.md`** — Protocol, configuration, anti-patterns
 - **`references/environment-keys.md`** — Environment injection, usage patterns
-- **`references/common-patterns.md`** — Convenience initializers/accessors, parameterized styles
-- **`references/testing.md`** — Snapshot tests, test organization
-- **`references/previews.md`** — Preview structure, checklist
+- **`references/common-patterns.md`** — Convenience inits, parameterized styles, bindings, roles
+- **`references/advanced-patterns.md`** — State machines, dual protocols, result builders
+- **`references/testing.md`** — Snapshots, config tests, test helpers
+- **`references/previews.md`** — Preview structure, stateful helpers, snapshot mapping
 - **`references/design-system.md`** — Design tokens, typography, colors
 - **`references/accessibility.md`** — Labels, identifiers, Dynamic Type
 

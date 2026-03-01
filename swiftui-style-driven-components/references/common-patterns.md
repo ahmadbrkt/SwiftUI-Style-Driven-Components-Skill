@@ -99,7 +99,7 @@ public struct AdaptiveCardStyle: CardStyle {
 
 ## Bindings in Configuration
 
-For components that modify state (e.g., inputs), store the `Binding` and access via `projectedValue`:
+For components that modify state (e.g., inputs, steppers), store the `Binding` directly:
 
 ```swift
 public struct InputStyleConfiguration {
@@ -118,7 +118,7 @@ public struct DefaultInputStyle: InputStyle {
     
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
-        TextField("", text: configuration.text)
+        TextField("", text: configuration.$text)
             .background(Color.white)
             .foregroundStyle(.black)
             .font(.body)

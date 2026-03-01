@@ -2,6 +2,8 @@
 
 ## Structure
 
+Use `#Preview` macros mapped to `enum` static vars:
+
 ```swift
 import SwiftUI
 
@@ -86,23 +88,60 @@ public enum CardPreviews {
 }
 ```
 
-## Checklist
+## Preview Scaffold (Optional)
 
-- [ ] All style variations together
-- [ ] Different content configurations
-- [ ] Environment inheritance and overrides
-- [ ] Real-world usage scenarios
-- [ ] Edge cases (empty, long text, empty content)
+If your design system requires setup (e.g., registering custom fonts, constraining to device width), create a reusable view modifier and apply it to every preview root. The exact implementation depends on your project.
+
+## Section Labels (Optional)
+
+For previews with many variants, a helper view that renders a caption above each group can reduce noise. Group related variants under descriptive labels like "At Minimum (0)" or "With Icon".
+
+## Stateful Helper Views
+
+For components that require `@Binding`, create **private helper views** inside the enum:
+
+```swift
+enum StepperPreviews {
+
+    @MainActor static var styles: some View {
+        VStack(spacing: 16) {
+            StepperPreview(value: 0)
+            StepperPreview(value: 5)
+            StepperPreview(value: 10, range: 0...10)
+        }
+        .padding()
+    }
+
+    // MARK: - Helper Views
+
+    private struct StepperPreview: View {
+        @State var value: Int
+        var range: ClosedRange<Int>?
+
+        init(value: Int, range: ClosedRange<Int>? = nil) {
+            _value = State(initialValue: value)
+            self.range = range
+        }
+
+        var body: some View {
+            Stepper(value: $value, in: range)
+        }
+    }
+}
+```
+
+**Never** use `@State` directly in the `enum` — it won't work. Always use a private helper view.
 
 ## Design System Environment
 
-If design system requires setup:
+If your design system requires environment setup:
 
 ```swift
 extension View {
     func previewEnvironment() -> some View {
         self
             .environment(\.colorScheme, .light)
+            // Add any project-specific environment setup
     }
 }
 
@@ -111,3 +150,31 @@ extension View {
         .previewEnvironment()
 }
 ```
+
+## Checklist
+
+- [ ] Preview file uses `enum` (not struct/class)
+- [ ] `@MainActor` on every `static var`
+- [ ] `#Preview("Name")` macro for each static var
+- [ ] All style variations covered
+- [ ] Different content configurations
+- [ ] Environment cascading + override demonstrated
+- [ ] Real-world usage scenarios
+- [ ] Edge cases: empty string, long text, EmptyView
+- [ ] Disabled states (if applicable)
+- [ ] All sizes (if size environment key exists)
+- [ ] Stateful content uses private helper views (not `@State` in enum)
+- [ ] MARK comments organize sections
+
+## Preview ↔ Snapshot Mapping
+
+Every preview static var becomes one snapshot test:
+
+| Preview | Test |
+|---|---|
+| `CardPreviews.styles` | `func styles()` |
+| `CardPreviews.content` | `func content()` |
+| `CardPreviews.cascading` | `func cascading()` |
+| `CardPreviews.edgeCases` | `func edgeCases()` |
+
+See `references/testing.md` for snapshot test patterns.
